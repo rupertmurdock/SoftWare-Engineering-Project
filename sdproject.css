@@ -3,12 +3,12 @@ body {
 }
 a:link {
     text-decoration: none;
+    text-color: black;
 }
 .navbar {
     background-color: aliceblue;
     display: flex;
     padding: 25px 18px;
-    color: whitesmoke;
     font-weight: bold;
     margin: 20px;
     border: dotted black;
