@@ -7,7 +7,7 @@ body {
     padding: 25px 18px;
     color: whitesmoke;
     font-weight: bold;
-    cursor: crosshair;
+    margin: 20px;
     border: dotted black;
     justify-content: space-between;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
