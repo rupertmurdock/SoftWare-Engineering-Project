@@ -1,6 +1,9 @@
 body {
     background-image: url('tarmufantasy.jpg')
 }
+a:link {
+    text-decoration: none;
+}
 .navbar {
     background-color: aliceblue;
     display: flex;
