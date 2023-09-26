@@ -9,6 +9,7 @@ a:link {
     background-color: aliceblue;
     display: flex;
     padding: 25px 18px;
+    justify-content: flex-end;
     font-weight: bold;
     margin: 20px;
     border: dotted black;
