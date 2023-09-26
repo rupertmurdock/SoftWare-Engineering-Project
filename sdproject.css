@@ -1,0 +1,14 @@
+body {
+    background-image: url('tarmufantasy.jpg')
+}
+.navbar {
+    background-color: aliceblue;
+    display: flex;
+    padding: 25px 18px;
+    color: whitesmoke;
+    font-weight: bold;
+    cursor: crosshair;
+    border: dotted black;
+    justify-content: space-between;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
