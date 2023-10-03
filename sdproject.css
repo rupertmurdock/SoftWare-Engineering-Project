@@ -1,7 +1,7 @@
 body {
     background-image: url('cloudbackground.jpg')
     
-    background-size: cover;
+    background-size: 100% 100%;
 }
 a:link {
     text-decoration: none;
