@@ -9,6 +9,7 @@ a:link {
 #logo {
     img {
         height: 100px;
+        border-radius: 50%;
     }
 }
 .nav-logo {
