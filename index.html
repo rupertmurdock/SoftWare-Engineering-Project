@@ -18,72 +18,25 @@
             </div>
         </nav>
 
-        <form action="#" method="post">
+        <div>
             <h2>Sign Up</h2>
+        </div>
 
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+        <div>
+            <input type="text" id="username" placeholder="Username(Optional)">
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
     
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-    
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-    
-            <button type="submit" id="signupBtn">Sign Up</button>
-            <div id="signupMessage"></div>
-        </form>
+            <div>
+                <button onclick="signUp()">Sign Up</button>
+                <button onclick="signIn()">Sign In</button>
+            </div>
+        </div>
 
-        
-        
+        <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+
+        <script src="index.js"></script>
     </body>
-
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyDQBx7pycRfjXUBCa3xZ7HuAbmho79bzAk",
-          authDomain: "games-1-website.firebaseapp.com",
-          projectId: "games-1-website",
-          storageBucket: "games-1-website.appspot.com",
-          messagingSenderId: "580940562230",
-          appId: "1:580940562230:web:868cb9a9b513f48beffd97",
-          measurementId: "G-XV5CXWX2SL"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-
-        document.getElementById("signupBtn").addEventListener("click", function (event) {
-        event.preventDefault();
-
-        const username = document.getElementById("username").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-
-        // Firebase signup function
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                // Signed up successfully
-                const user = userCredential.user;
-                document.getElementById("signupMessage").innerHTML = "Signup successful!";
-
-                // You can add additional logic here, e.g., redirect to a new page
-            })
-            .catch((error) => {
-                // Handle signup errors
-                const errorMessage = error.message;
-                document.getElementById("signupMessage").innerHTML = errorMessage;
-            });
-    });
-    
-      </script>
-
 </html>
