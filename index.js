@@ -48,7 +48,6 @@ function signUp(){
 
         alert(error_massage)
     })
-    alert('test 2')
 }
 
 function signIn(){
