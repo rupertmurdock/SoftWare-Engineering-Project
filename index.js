@@ -19,7 +19,7 @@ function signUp(){
     password = document.getElementById("password").value;
 
     //varify input
-    if(username = null){
+    if(username === null){
         alert('what\'s your name?')
         return
     }
@@ -33,7 +33,7 @@ function signUp(){
         var user_data = {
             username : username,
             email : email,
-            last_sign_in : Data.now(),
+            last_sign_in : Date.now(),
 
             chess_win : 0,
             chess_lose : 0,
@@ -62,7 +62,7 @@ function signIn(){
         var database_ref = database.ref()
         
         var user_data = {
-            last_sign_in : Data.now(),
+            last_sign_in : Date.now(),
         }
 
         database_ref.child('users/' + user.uid).update(user_data)
