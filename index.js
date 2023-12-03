@@ -1,29 +1,38 @@
-var firebaseConfig = {
+// Import the functions you need from the SDKs you need
+//import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+//import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
     apiKey: "AIzaSyBDZFqhkECAYqdxUDEUF96Rb9OCUh6Jl64",
     authDomain: "game-1-website.firebaseapp.com",
+    databaseURL: "https://game-1-website-default-rtdb.firebaseio.com",
     projectId: "game-1-website",
     storageBucket: "game-1-website.appspot.com",
     messagingSenderId: "483277766163",
     appId: "1:483277766163:web:55358a49073017e46609e6"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth()
-const database = firebase.database()
+// Initialize Firebase
+const app = initializeApp(firebaseConfig)
+const auth = getAuth()
+const database = getDatabase()
 
 function test(){
     alert('test')
 }
 
+
 function signUp(){
     //get input
-    username = document.getElementById("username").value;
-    email = document.getElementById("email").value;
-    password = document.getElementById("password").value;
+    username = document.getElementById("username").value
+    email = document.getElementById("email").value
+    password = document.getElementById("password").value
 
     //sign up
-    auth.createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
     .then(function(){
         var user = auth.currentUser
         var database_ref = database.ref()
@@ -51,8 +60,8 @@ function signUp(){
 }
 
 function signIn(){
-    email = document.getElementById("email").value;
-    password = document.getElementById("password").value;
+    email = document.getElementById("email").value
+    password = document.getElementById("password").value
 
     auth.signInWithEmailAndPassword(email, password)
     .then(function(){
