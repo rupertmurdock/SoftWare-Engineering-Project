@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import { getDatabase, ref, set, update } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import { getDatabase, ref, set, child, push, update } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -19,8 +19,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
-const auth = getAuth()
-const database = getDatabase()
+const auth = getAuth(app)
+const database = getDatabase(app)
 
 function test(){
     alert('test')
@@ -35,11 +35,10 @@ function signUp(){
 
     //sign up
     createUserWithEmailAndPassword(auth, email, password)
-    .then(function(){
-        var user = auth.currentUser
-        var database_ref = database.ref()
-        
-        var user_data = {
+    .then((userCredential) => {
+        const user = userCredential.user;
+
+        set(ref(database, 'users/' + user.uid), {
             username : username,
             email : email,
             last_sign_in : Date.now(),
@@ -47,13 +46,11 @@ function signUp(){
             chess_win : 0,
             chess_lose : 0,
             chess_draw : 0,
-        }
-
-        database_ref.child('users/' + user.uid).set(user_data)
+        });
 
         alert('Sign Up Successful')
     })
-    .catch(function(error){
+    .catch((error) => {
         var error_code = error.code
         var error_massage = error.message
 
@@ -65,20 +62,29 @@ function signIn(){
     email = document.getElementById("email").value
     password = document.getElementById("password").value
 
-    auth.signInWithEmailAndPassword(email, password)
-    .then(function(){
-        var user = auth.currentUser
-        var database_ref = database.ref()
-        
-        var user_data = {
-            last_sign_in : Date.now(),
-        }
+    //sign in
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        const user = userCredential.user;
 
-        database_ref.child('users/' + user.uid).update(user_data)
+        const postData = {
+            last_sign_in : Date.now(),
+
+        };
+        
+        // Get a key for a new Post.
+        const newPostKey = push(child(ref(database), 'posts')).key;
+        
+        // Write the new post's data simultaneously in the posts list and the user's post list.
+        const updates = {};
+        updates['/posts/' + newPostKey] = postData;
+        updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+        
+        return update(ref(database), updates);
 
         alert('Sign In Successful')
     })
-    .catch(function(error){
+    .catch((error) => {
         var error_code = error.code
         var error_massage = error.message
 
