@@ -23,7 +23,6 @@ function signUp(){
     password = document.getElementById("password").value;
 
     //varify input
-    alert('test 1')
     if(username === null){
         alert('what\'s your name?')
         return
@@ -55,6 +54,7 @@ function signUp(){
 
         alert(error_massage)
     })
+    alert('test 2')
 }
 
 function signIn(){
