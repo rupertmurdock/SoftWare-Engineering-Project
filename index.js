@@ -22,12 +22,6 @@ function signUp(){
     email = document.getElementById("email").value;
     password = document.getElementById("password").value;
 
-    //varify input
-    if(username === null){
-        alert('what\'s your name?')
-        return
-    }
-
     //sign up
     auth.createUserWithEmailAndPassword(email, password)
     .then(function(){
