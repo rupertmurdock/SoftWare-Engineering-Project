@@ -12,6 +12,10 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth()
 const database = firebase.database()
 
+function test(){
+    alert('test')
+}
+
 function signUp(){
     //get input
     username = document.getElementById("username").value;
