@@ -23,18 +23,59 @@
         </div>
 
         <div>
-            <input type="text" id="username" placeholder="Username(Optional)">
-            <input type="email" id="email" placeholder="Email">
-            <input type="password" id="password" placeholder="Password">
-    
-            <div>
-                <button onclick="signUp()">Sign Up</button>
-                <button onclick="signIn()">Sign In</button>
-                <button onclick="test()">test</button>
-            </div>
+            <input type="text" id="username" name="username" placeholder="Username(Optional)">
+            <input type="email" id="email" name="email" placeholder="Email">
+            <input type="password" id="password" name="password" placeholder="Password">
+            
+            <input type="submit" id="signUp" name="signUp" value="sign up">
         </div>
     </body>
 
-    <script src="index.js" type="module"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBDZFqhkECAYqdxUDEUF96Rb9OCUh6Jl64",
+          authDomain: "game-1-website.firebaseapp.com",
+          databaseURL: "https://game-1-website-default-rtdb.firebaseio.com",
+          projectId: "game-1-website",
+          storageBucket: "game-1-website.appspot.com",
+          messagingSenderId: "483277766163",
+          appId: "1:483277766163:web:55358a49073017e46609e6"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+
+        signUp.addEventListener('click', (e) => {
+
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed up 
+                    const user = userCredential.user;
+
+                    alert('Sign Up Successful!');
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    
+                    alert('errorMessage');
+                });
+        });
+
+      </script>
 
 </html>
