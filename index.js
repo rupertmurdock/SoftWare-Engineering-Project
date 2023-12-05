@@ -26,7 +26,7 @@ function test(){
     alert('test')
 }
 
-
+/*
 function signUp(){
     //get input
     username = document.getElementById("username").value
@@ -90,4 +90,5 @@ function signIn(){
 
         alert(error_massage)
     })
+    */
 }
