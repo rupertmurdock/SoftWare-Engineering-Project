@@ -5,7 +5,8 @@ let movesMade;
 let whosTurn = "white"
 let whiteTime = 181;
 let blackTime = 180; 
-
+let whitePossibleMoves = []
+let blackPossibleMoves = []
 let pieceMovement = []
 const audio = new Audio('move_sound.wav');
 
@@ -440,11 +441,9 @@ function checkmate(startX, startY) {
   }
   */
         if(chessboard[startX][startY].movement(startX, startY, bKing.posX, bKing.posY)) {
-          console.log(movesMade)
           const challengerStepstoKing = movesMade;
-          let blackPossibleMoves = [];
+          blackPossibleMoves = [];
           blackCheck = true;
-          console.log("black check")
           for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
               if (bKing.movement(bKing.posX, bKing.posY, i, j)) {
@@ -488,14 +487,15 @@ function checkmate(startX, startY) {
           }
     }
     else if(chessboard[startX][startY].movement(startX, startY, wKing.posX, wKing.posY)) {
-      
+      const challengerStepstoKing = movesMade;
+
       whiteCheck = true
       console.log("nonwhite")
-      let whitePossibleMoves = []
+      whitePossibleMoves = []
       for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
           if (wKing.movement(wKing.posX, wKing.posY, i, j)) {
-
+            console.log("hello")
             let canMoveThere = true;
             for(let m = 0; m < 8; m++) {
               for(let k = 0; k < 8; k++) {
@@ -519,6 +519,7 @@ function checkmate(startX, startY) {
           }
         }
       }
+      console.log(whitePossibleMoves)
         if(whitePossibleMoves.length === 0 && whiteCheck === true) {
           alert("Black Won")
           location.reload(); 
@@ -624,7 +625,27 @@ function dragDrop(e) {
   const targetColor = e.target.classList.toString();
   const startX = beingDragged.parentNode.getAttribute('data-row') - 0;
   const startY = beingDragged.parentNode.getAttribute('data-col') - 0;
-  const moveMade = chessboard[startX][startY].movement(startX, startY, targetX, targetY);
+  let moveMade = chessboard[startX][startY].movement(startX, startY, targetX, targetY);
+  if(whosTurn === 'white') {
+    if (whiteCheck === true) {
+      const elementToCheck = [targetX, targetY];
+
+      const isPresent = whitePossibleMoves.some(element => JSON.stringify(element) === JSON.stringify(elementToCheck));
+      if(!isPresent) {
+        moveMade = false;
+      }
+    }
+  }
+  else if (whosTurn === 'black') {
+    if(blackCheck === true) {
+      const elementToCheck = [targetX, targetY];
+
+      const isPresent = blackPossibleMoves.some(element => JSON.stringify(element) === JSON.stringify(elementToCheck));
+      if(!isPresent) {
+        moveMade = false;
+      }
+    }
+  }
   if(moveMade && dragColor !== targetColor) {
     
     if (existingPiece) {
