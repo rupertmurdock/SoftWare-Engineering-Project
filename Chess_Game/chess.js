@@ -454,22 +454,21 @@ function checkmate(startX, startY) {
           for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
               if (bKing.movement(bKing.posX, bKing.posY, i, j)) {
-
+                console.log([i, j])
                 let canMoveThere = true;
                 for(let m = 0; m < 8; m++) {
                   for(let k = 0; k < 8; k++) {
                     if(chessboard[m][k].color === "black" && !(chessboard[m][k] instanceof King)) {
                       for(let iter = 0; iter < challengerStepstoKing.length; iter++) {
                         if(chessboard[m][k].movement(m, k, challengerStepstoKing[iter][0], challengerStepstoKing[iter][1])) {
-                          console.log("its being added by our team")
-                          console.log([challengerStepstoKing[iter][0], challengerStepstoKing[iter][1]])
-                          console.log(challengerStepstoKing)
-                          console.log(challengerStepstoKing.length)
+                     
                           blackPossibleMoves.push([challengerStepstoKing[iter][0], challengerStepstoKing[iter][1]])
                         }
                       }
                     }
-                    else if(chessboard[m][k].color === "white" && chessboard[m][k].movement(m, k, i, j)) {
+                    else if(chessboard[m][k].color === "white" && chessboard[m][k].movement(m, k, i, j)
+                    && m !== startX && k !== startY) {
+                      console.log(chessboard[m][k])
                       canMoveThere = false;
                       break;
                     }
