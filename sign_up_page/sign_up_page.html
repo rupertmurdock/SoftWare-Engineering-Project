@@ -55,7 +55,18 @@
 
                     set(ref(database, 'users/' + user.uid),{
                         username: username,
-                        email: email
+                        email: email,
+
+                        chess_wins: 0,
+                        chess_losses: 0,
+                        chess_draws: 0,
+
+                        ttt_wins: 0,
+                        ttt_losses: 0,
+                        ttt_draws: 0,
+
+                        highest_score: 0,
+                        longest_run: 0,
                     })
 
                     alert('Sign Up Successful!');
