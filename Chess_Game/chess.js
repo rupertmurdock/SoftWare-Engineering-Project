@@ -380,6 +380,9 @@ class Queen {
     movesMade = [[startX, startY]];
     let diffX = Math.abs(targetX - startX); 
     let diffY = Math.abs(targetY - startY);
+    if(diffX === 0 && diffY === 0) {
+      return false;
+    }
     if(diffX && !diffY) {
       let stepX = targetX > startX ? 1 : -1;
       for (let i = 1; i < diffX; i++) {
@@ -436,18 +439,9 @@ function checkmate(startX, startY) {
 
   }
   */
-
-  console.log("hey buddy")
-  console.log(startX)
-  console.log(startY)
-  console.log(bKing.posX)
-  console.log(bKing.posY)
-
-
         if(chessboard[startX][startY].movement(startX, startY, bKing.posX, bKing.posY)) {
           console.log(movesMade)
           const challengerStepstoKing = movesMade;
-
           let blackPossibleMoves = [];
           blackCheck = true;
           console.log("black check")
@@ -461,19 +455,20 @@ function checkmate(startX, startY) {
                     if(chessboard[m][k].color === "black" && !(chessboard[m][k] instanceof King)) {
                       for(let iter = 0; iter < challengerStepstoKing.length; iter++) {
                         if(chessboard[m][k].movement(m, k, challengerStepstoKing[iter][0], challengerStepstoKing[iter][1])) {
-                     
                           blackPossibleMoves.push([challengerStepstoKing[iter][0], challengerStepstoKing[iter][1]])
                         }
                       }
                     }
-                    else if(chessboard[m][k].color === "white" && chessboard[m][k].movement(m, k, i, j)
-                    && m !== startX && k !== startY) {
+                    else if(chessboard[m][k].color === "white" && chessboard[m][k].movement(m, k, i, j)) {
+          
+                      
                       console.log(chessboard[m][k])
                       canMoveThere = false;
                       break;
                     }
                   }
                 }
+
                 if (canMoveThere) {
                   console.log("our king can move here")
                   blackPossibleMoves.push([i, j]);
@@ -481,7 +476,7 @@ function checkmate(startX, startY) {
               }
             }
           }
-
+          
           console.log(blackPossibleMoves)
           if(blackPossibleMoves.length === 0 && blackCheck === true) {
             console.log("hello i put this here")
@@ -492,7 +487,7 @@ function checkmate(startX, startY) {
             return false
           }
     }
-    if(chessboard[startX][startY].movement(startX, startY, wKing.posX, wKing.posY)) {
+    else if(chessboard[startX][startY].movement(startX, startY, wKing.posX, wKing.posY)) {
       
       whiteCheck = true
       console.log("nonwhite")
@@ -507,10 +502,6 @@ function checkmate(startX, startY) {
                 if(chessboard[m][k].color === "white" && !(chessboard[m][k] instanceof King)) {
                   for(let iter = 0; iter < challengerStepstoKing.length; iter++) {
                     if(chessboard[m][k].movement(m, k, challengerStepstoKing[iter][0], challengerStepstoKing[iter][1])) {
-                      console.log("its being added by our team")
-                      console.log([challengerStepstoKing[iter][0], challengerStepstoKing[iter][1]])
-                      console.log(challengerStepstoKing)
-                      console.log(challengerStepstoKing.length)
                       whitePossibleMoves.push([challengerStepstoKing[iter][0], challengerStepstoKing[iter][1]])
                     }
                   }
