@@ -193,7 +193,7 @@ class Pawn {
               }
               //white pawn that has moved takes another piece
               else if (startX - 1 === targetX && Math.abs(startY - targetY) === 1 
-              && chessboard[targetX][targetY].color !== dragColor
+              && chessboard[targetX][targetY].color !== chessboard[startX][startY].color
               && chessboard[targetX][targetY] !== ePiece) {
                 
                
