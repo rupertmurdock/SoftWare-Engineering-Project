@@ -47,12 +47,7 @@
         <div>
             <input type="button" id="getData" name="getData" value="check status">
         </div>
-        <div>
-            <input type="button" id="wChess" name="wChess" value="win chess game">
-        </div>
-        <div>
-            <input type="button" id="lChess" name="lChess" value="loss chess game">
-        </div>
+        
         <p>
             Tarmu, Robin, Mohamed, and Jacob poured their hearts and souls into our latest project. Their dedication and hard work were truly remarkable. Day in and day out, they collaborated seamlessly, combining their unique skills and perspectives to achieve outstanding results. Their commitment to excellence was evident in every aspect of the project, from its inception to completion. The tireless efforts of Tarmu, Robin, Mohamed, and Jacob not only met but exceeded expectations, setting a new standard for teamwork and accomplishment. Their passion and diligence serve as an inspiration to us all.
         </p>
@@ -165,65 +160,6 @@
                 });
             }
         }
-
-        document.getElementById('wChess').addEventListener('click', WChess);
-
-        function WChess(){
-            const user = auth.currentUser;
-
-            if(auth.currentUser === null){
-                alert('Please sign in before update the status.');
-            }
-            else{
-                get(child(ref(database), 'users/' + user.uid))
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        update(ref(database, 'users/' + user.uid),{
-                            chess_wins: snapshot.val().chess_wins + 1,
-                        })
-                    } 
-                    else {
-                        alert("No data available");
-                    }
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-
-                    alert(errorMessage);
-                });
-            }
-        }
-
-        document.getElementById('lChess').addEventListener('click', LChess);
-
-        function LChess(){
-            const user = auth.currentUser;
-
-            if(auth.currentUser === null){
-                alert('Please sign in before update the status.');
-            }
-            else{
-                get(child(ref(database), 'users/' + user.uid))
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        update(ref(database, 'users/' + user.uid),{
-                            chess_losses: snapshot.val().chess_losses + 1,
-                        })
-                    } 
-                    else {
-                        alert("No data available");
-                    }
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-
-                    alert(errorMessage);
-                });
-            }
-        }
-
       </script>
 
 </html>

@@ -1,54 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-        import { getDatabase, set, ref, update, child, get } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyBDZFqhkECAYqdxUDEUF96Rb9OCUh6Jl64",
-          authDomain: "game-1-website.firebaseapp.com",
-          databaseURL: "https://game-1-website-default-rtdb.firebaseio.com",
-          projectId: "game-1-website",
-          storageBucket: "game-1-website.appspot.com",
-          messagingSenderId: "483277766163",
-          appId: "1:483277766163:web:55358a49073017e46609e6"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const auth = getAuth();
-
-function chessWin(){
-  const user = auth.currentUser;
-  alert(user.uid);
-  get(child(ref(database), 'users/' + user.uid))
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        alert('Hi, ' + snapshot.val().username 
-                        + '\n----------\nChess:\nWins: ' + snapshot.val().chess_wins 
-                        + '\nLosses: ' + snapshot.val().chess_losses 
-                        + '\nDraws: ' + snapshot.val().chess_draws
-                        + '\n----------\nTic Tac Toe:\nWins: ' + snapshot.val().ttt_wins 
-                        + '\nLosses: ' + snapshot.val().ttt_losses 
-                        + '\nDraws: ' + snapshot.val().ttt_draws
-                        + '\n----------\nSnake:\nHighest Score: ' + snapshot.val().highest_score 
-                        + '\nLongest Run: ' + snapshot.val().longest_run + ' seconds');
-                    } 
-                    else {
-                        alert("No data available");
-                    }
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-
-                    alert(errorMessage);
-                });
-}
-
-
 //import "pieces.js";
 let whiteCheck = false
 let blackCheck = false
@@ -511,7 +460,6 @@ function checkmate(startX, startY) {
           
           if(blackPossibleMoves.length === 0 && blackCheck === true) {
             alert("White Won");
-            chessWin();
             //timerElement.textContent = "White Won";
             location.reload();
           }
@@ -551,7 +499,7 @@ function checkmate(startX, startY) {
       }
         if(whitePossibleMoves.length === 0 && whiteCheck === true) {
           alert("Black Won")
-          timerElement.textContent = "Black Won";
+          //timerElement.textContent = "Black Won";
           location.reload(); 
       } 
       else {

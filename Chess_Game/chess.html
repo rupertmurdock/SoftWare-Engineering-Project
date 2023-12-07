@@ -91,6 +91,11 @@
             </div>
         </main>
 
+        <div>
+            <input type="button" id="wChess" name="wChess" value="Win">
+            <input type="button" id="dChess" name="dChess" value="Draw">
+            <input type="button" id="lChess" name="lChess" value="Loss">
+        </div>
 
         <script type="module" src="chess.js"></script>
         <script>
@@ -131,4 +136,118 @@
             }
         </script>
     </body>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getDatabase, set, ref, update, child, get } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBDZFqhkECAYqdxUDEUF96Rb9OCUh6Jl64",
+          authDomain: "game-1-website.firebaseapp.com",
+          databaseURL: "https://game-1-website-default-rtdb.firebaseio.com",
+          projectId: "game-1-website",
+          storageBucket: "game-1-website.appspot.com",
+          messagingSenderId: "483277766163",
+          appId: "1:483277766163:web:55358a49073017e46609e6"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+
+        document.getElementById('wChess').addEventListener('click', WChess);
+
+        function WChess(){
+            const user = auth.currentUser;
+
+            if(auth.currentUser === null){
+                alert('Please sign in before update the status.');
+            }
+            else{
+                get(child(ref(database), 'users/' + user.uid))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        update(ref(database, 'users/' + user.uid),{
+                            chess_wins: snapshot.val().chess_wins + 1,
+                        })
+                    } 
+                    else {
+                        alert("No data available");
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    alert(errorMessage);
+                });
+            }
+        }
+
+        document.getElementById('dChess').addEventListener('click', DChess);
+
+        function DChess(){
+            const user = auth.currentUser;
+
+            if(auth.currentUser === null){
+                alert('Please sign in before update the status.');
+            }
+            else{
+                get(child(ref(database), 'users/' + user.uid))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        update(ref(database, 'users/' + user.uid),{
+                            chess_draws: snapshot.val().chess_draws + 1,
+                        })
+                    } 
+                    else {
+                        alert("No data available");
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    alert(errorMessage);
+                });
+            }
+        }
+
+        document.getElementById('lChess').addEventListener('click', LChess);
+
+        function LChess(){
+            const user = auth.currentUser;
+
+            if(auth.currentUser === null){
+                alert('Please sign in before update the status.');
+            }
+            else{
+                get(child(ref(database), 'users/' + user.uid))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        update(ref(database, 'users/' + user.uid),{
+                            chess_losses: snapshot.val().chess_losses + 1,
+                        })
+                    } 
+                    else {
+                        alert("No data available");
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    alert(errorMessage);
+                });
+            }
+        }
+
+      </script>
+
 </html>
