@@ -22,8 +22,7 @@ function chessWin(){
   get(child(ref(database), 'users/' + user.uid))
   .then((snapshot) => {
       if (snapshot.exists()) {
-          temp = snapshot.val().chess_wins + 1;
-          alert(temp);
+        temp = snapshot.val().chess_wins + 1;
       } 
       else {
           alert("No data available");
@@ -39,6 +38,7 @@ function chessWin(){
   update(ref(database, 'users/' + user.uid),{
       chess_wins: temp,
   })
+  alert(temp);
 }
 
 //import "pieces.js";
