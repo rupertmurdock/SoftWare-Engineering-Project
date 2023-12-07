@@ -10,7 +10,7 @@
         </div>
 
         <div>
-            <input type="text" id="username" name="username" placeholder="Username(Optional)">
+            <input type="text" id="username" name="username" placeholder="Username">
             <input type="email" id="email" name="email" placeholder="Email">
             <input type="password" id="password" name="password" placeholder="Password">
             
@@ -48,35 +48,40 @@
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
 
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Signed up 
-                    const user = userCredential.user;
+            if(username === null || username === ""){
+                alert('Username is required');
+            }
+            else{
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Signed up 
+                        const user = userCredential.user;
 
-                    set(ref(database, 'users/' + user.uid),{
-                        username: username,
-                        email: email,
+                        set(ref(database, 'users/' + user.uid),{
+                            username: username,
+                            email: email,
 
-                        chess_wins: 0,
-                        chess_losses: 0,
-                        chess_draws: 0,
+                            chess_wins: 0,
+                            chess_losses: 0,
+                            chess_draws: 0,
 
-                        ttt_wins: 0,
-                        ttt_losses: 0,
-                        ttt_draws: 0,
+                            ttt_wins: 0,
+                            ttt_losses: 0,
+                            ttt_draws: 0,
 
-                        highest_score: 0,
-                        longest_run: 0,
+                            highest_score: 0,
+                            longest_run: 0,
+                        })
+
+                        alert('Sign Up Successful!');
                     })
-
-                    alert('Sign Up Successful!');
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
                     
-                    alert(errorMessage);
-                });
+                        alert(errorMessage);
+                    });
+            }
         });
 
       </script>

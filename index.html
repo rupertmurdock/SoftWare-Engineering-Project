@@ -36,7 +36,7 @@
         </div>
 
         <div>
-            <input type="button" id="getData" name="getData" value="get data">
+            <input type="button" id="getData" name="getData" value="Status">
         </div>
 
     </body>
@@ -106,16 +106,23 @@
             });
         }
 
-        document.getElementById('getData').addEventListener('click', chessWin);
+        document.getElementById('getData').addEventListener('click', status);
 
-        function chessWin(){
+        function status(){
             const user = auth.currentUser;
 
-            const dbRef = ref(database);
-            get(child(dbRef, 'users/' + user.uid))
+            get(child(ref(database), 'users/' + user.uid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    alert(snapshot.val().username);
+                    alert('Hi, ' + snapshot.val().username 
+                    + '\n----------\nChess:\nWins: ' + snapshot.val().chess_wins 
+                    + '\nLosses: ' + snapshot.val().chess_losses 
+                    + '\nDraws: ' + snapshot.val().chess_draws
+                    + '\n----------\nTic Tac Toe:\nWins: ' + snapshot.val().ttt_wins 
+                    + '\nLosses: ' + snapshot.val().ttt_losses 
+                    + '\nDraws: ' + snapshot.val().ttt_draws
+                    + '\n----------\nSnake:\nHighest Score: ' + snapshot.val().highest_score 
+                    + '\nLongest Run: ' + snapshot.val().longest_run + ' seconds');
                 } 
                 else {
                     alert("No data available");
@@ -127,10 +134,6 @@
 
                 alert(errorMessage);
             });
-
-            update(ref(database, 'users/' + user.uid),{
-                chess_wins: 10,
-            })
         }
 
       </script>
