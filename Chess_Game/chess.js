@@ -16,34 +16,6 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-
-async function chessWin() {
-  const user = auth.currentUser;
-
-  if (user) {
-    console.log("User UID:", user.uid);
-
-    try {
-      const snapshot = await get(child(ref(database), 'users/' + user.uid));
-      console.log("Firebase Snapshot:", snapshot.val());
-
-      if (snapshot.exists()) {
-        alert('win~~~~~');
-        // snapshot.val().chess_wins
-      } else {
-        alert("No data available");
-      }
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error("Firebase Error:", errorCode, errorMessage);
-      alert(errorMessage);
-    }
-  } else {
-    alert("No user is logged in");
-  }
-}
-
 //import "pieces.js";
 let whiteCheck = false
 let blackCheck = false
@@ -506,7 +478,12 @@ function checkmate(startX, startY) {
           
           if(blackPossibleMoves.length === 0 && blackCheck === true) {
             alert("White Won");
-            chessWin();
+            
+            const user = auth.currentUser;
+            update(ref(database, 'users/' + user.uid),{
+              ttt_losses: 3,
+            })
+
             location.reload();
           }
           else {
