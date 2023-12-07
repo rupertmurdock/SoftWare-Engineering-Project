@@ -47,6 +47,12 @@
         <div>
             <input type="button" id="getData" name="getData" value="check status">
         </div>
+        <div>
+            <input type="button" id="wChess" name="wChess" value="win chess game">
+        </div>
+        <div>
+            <input type="button" id="lChess" name="lChess" value="loss chess game">
+        </div>
 
     </body>
 
@@ -144,6 +150,64 @@
                         + '\nDraws: ' + snapshot.val().ttt_draws
                         + '\n----------\nSnake:\nHighest Score: ' + snapshot.val().highest_score 
                         + '\nLongest Run: ' + snapshot.val().longest_run + ' seconds');
+                    } 
+                    else {
+                        alert("No data available");
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    alert(errorMessage);
+                });
+            }
+        }
+
+        document.getElementById('wChess').addEventListener('click', WChess);
+
+        function WChess(){
+            const user = auth.currentUser;
+
+            if(auth.currentUser === null){
+                alert('Please sign in before update the status.');
+            }
+            else{
+                get(child(ref(database), 'users/' + user.uid))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        update(ref(database, 'users/' + user.uid),{
+                            chess_wins: snapshot.val().chess_wins + 1,
+                        })
+                    } 
+                    else {
+                        alert("No data available");
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    alert(errorMessage);
+                });
+            }
+        }
+
+        document.getElementById('lChess').addEventListener('click', LChess);
+
+        function LChess(){
+            const user = auth.currentUser;
+
+            if(auth.currentUser === null){
+                alert('Please sign in before update the status.');
+            }
+            else{
+                get(child(ref(database), 'users/' + user.uid))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        update(ref(database, 'users/' + user.uid),{
+                            chess_losses: snapshot.val().chess_losses + 1,
+                        })
                     } 
                     else {
                         alert("No data available");
