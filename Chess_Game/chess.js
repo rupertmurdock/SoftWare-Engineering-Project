@@ -22,8 +22,8 @@ function chessWin(){
   get(child(ref(database), 'users/' + user.uid))
   .then((snapshot) => {
       if (snapshot.exists()) {
-        alert(snapshot.val().chess_wins);
-        
+        alert('hi');
+        //snapshot.val().chess_wins
       } 
       else {
           alert("No data available");
