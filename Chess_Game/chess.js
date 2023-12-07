@@ -191,17 +191,12 @@ class Pawn {
               //black pawn that has moved before moves forward
               if(startX + 1 === targetX && targetY === startY 
                 && chessboard[targetX][targetY] === ePiece) {
-                  console.log("hi buddy")
-                  console.log(targetX)
-              
                 return true
               }
               // black pawn that has moved takes a piece
               else if ((startX + 1 === targetX && Math.abs(startY - targetY) === 1) 
               && chessboard[targetX][targetY].color !== dragColor 
               && chessboard[targetX][targetY] !== ePiece) {
-                
-              
                 return true
             }
             else {
@@ -229,9 +224,6 @@ class Pawn {
             else {
               //white pawn that has moved moves forward
               if(startX - 1 === targetX && targetY === startY && chessboard[targetX][targetY] === ePiece) {
-                
-            
-              
                 return true
               }
               //white pawn that has moved takes another piece
@@ -240,7 +232,6 @@ class Pawn {
               && chessboard[targetX][targetY] !== ePiece) {
                 
                
-                console.log(targetX === 0)
                
                 return true
               }
@@ -353,19 +344,15 @@ class King {
     let diffX = Math.abs(targetX - startX);
     let diffY = Math.abs(targetY - startY);
     const colorMatch = chessboard[startX][startY].color === chessboard[targetX][targetY].color;
-    console.log(colorMatch)
     if(diffX === 1 && diffY === 0 && !colorMatch) {
      
       return true;
     }
     else if(diffX === 0 && diffY === 1
       && !colorMatch) {
-      
-      console.log("its here1")
       return true;
     }
     else if (diffX === 1 && diffY === 1 && !colorMatch) {
-     
       return true
     }
     
@@ -490,7 +477,6 @@ function checkmate(startX, startY) {
           for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
               if (bKing.movement(bKing.posX, bKing.posY, i, j)) {
-                console.log([i, j])
                 let canMoveThere = true;
                 for(let m = 0; m < 8; m++) {
                   for(let k = 0; k < 8; k++) {
@@ -501,10 +487,7 @@ function checkmate(startX, startY) {
                         }
                       }
                     }
-                    else if(chessboard[m][k].color === "white" && chessboard[m][k].movement(m, k, i, j)) {
-          
-                      
-                      console.log(chessboard[m][k])
+                    else if(chessboard[m][k].color === "white" && chessboard[m][k].movement(m, k, i, j)) {        
                       canMoveThere = false;
                       break;
                     }
@@ -512,14 +495,12 @@ function checkmate(startX, startY) {
                 }
 
                 if (canMoveThere) {
-                  console.log("our king can move here")
                   blackPossibleMoves.push([i, j]);
                 }
               }
             }
           }
           
-          console.log(blackPossibleMoves)
           if(blackPossibleMoves.length === 0 && blackCheck === true) {
             console.log("hello i put this here");
             alert("White Won");
@@ -534,12 +515,10 @@ function checkmate(startX, startY) {
       const challengerStepstoKing = movesMade;
 
       whiteCheck = true
-      console.log("nonwhite")
       whitePossibleMoves = []
       for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
           if (wKing.movement(wKing.posX, wKing.posY, i, j)) {
-            console.log("hello")
             let canMoveThere = true;
             for(let m = 0; m < 8; m++) {
               for(let k = 0; k < 8; k++) {
@@ -557,13 +536,11 @@ function checkmate(startX, startY) {
               }
             }
             if (canMoveThere) {
-              console.log("our king can move here")
               whitePossibleMoves.push([i, j]);
             }
           }
         }
       }
-      console.log(whitePossibleMoves)
         if(whitePossibleMoves.length === 0 && whiteCheck === true) {
           alert("Black Won")
           location.reload(); 
@@ -722,4 +699,5 @@ function dragDrop(e) {
     e.target.classList.remove('highlight');
   } 
 }
+ 
  
