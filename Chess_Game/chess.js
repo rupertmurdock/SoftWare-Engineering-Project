@@ -15,9 +15,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
+const user = auth.currentUser;
 
 function chessWin(){
-  const user = auth.currentUser;
+  
   alert(user.uid);
   get(child(ref(database), 'users/' + user.uid))
   .then((snapshot) => {
