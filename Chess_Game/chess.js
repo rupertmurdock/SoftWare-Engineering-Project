@@ -24,9 +24,7 @@ function chessWin(){
       if (snapshot.exists()) {
         var temp = snapshot.val().chess_wins + 1;
         alert(temp);
-        update(ref(database, 'users/' + user.uid),{
-          chess_wins: temp,
-        })
+        
       } 
       else {
           alert("No data available");
