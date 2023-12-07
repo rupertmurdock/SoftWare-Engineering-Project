@@ -78,6 +78,9 @@
                 const dt = new Date();
                 update(ref(database, 'users/' + user.uid),{
                     last_sign_in: dt,
+                })
+
+                set(ref(database, 'users/' + user.uid),{
                     ttt_wins: 3,
                 })
 
