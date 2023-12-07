@@ -17,8 +17,24 @@ const database = getDatabase(app);
 const auth = getAuth();
 
 function chessWin(){
-  alert('aaaaaaaa');
-  
+  const user = auth.currentUser;
+  alert(user.uid);
+  get(child(ref(database), 'users/' + user.uid))
+  .then((snapshot) => {
+      if (snapshot.exists()) {
+        alert('win~~~~~');
+        //snapshot.val().chess_wins
+      } 
+      else {
+        alert("No data available");
+      }
+  })
+  .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      
+      alert(errorMessage);
+  });
 }
 
 //import "pieces.js";
