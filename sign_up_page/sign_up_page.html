@@ -48,7 +48,10 @@
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
 
-            if(username === null || username === ""){
+            if(auth.currentUser !== null){
+                alert('You are already signed in!\nPlease sign out before sign up.');
+            }
+            else if(username === null || username === ""){
                 alert('Username is required');
             }
             else{

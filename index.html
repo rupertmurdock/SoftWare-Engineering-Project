@@ -40,7 +40,7 @@
         </div>
 
         <div>
-            <input type="button" id="getData" name="getData" value="Status005">
+            <input type="button" id="getData" name="getData" value="Status006">
         </div>
 
     </body>
@@ -73,41 +73,49 @@
             
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
+            if(auth.currentUser === null){
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
 
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
+                    const dt = new Date();
+                    update(ref(database, 'users/' + user.uid),{
+                        last_sign_in: dt,
+                    })
 
-                const dt = new Date();
-                update(ref(database, 'users/' + user.uid),{
-                    last_sign_in: dt,
+                    alert('Sign In Successful!');
                 })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
 
-                alert('Sign In Successful!');
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-
-                alert(errorMessage);
-            });
+                    alert(errorMessage);
+                });
+            }
+            else{
+                alert('You are already signed in!');
+            }
         });
 
         document.getElementById('signOut').addEventListener('click', SignOut);
 
         function SignOut(){
-            signOut(auth)
-            .then(() => {
-                // Sign-out successful.
-                alert('Sign Out Successful!');
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+            if(auth.currentUser === null){
+                alert('You are already signed out!');
+            }else{
+                signOut(auth)
+                .then(() => {
+                    // Sign-out successful.
+                    alert('Sign Out Successful!');
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
 
-                alert(errorMessage);
-            });
+                    alert(errorMessage);
+                });
+            }
         }
 
         document.getElementById('getData').addEventListener('click', status);
@@ -115,29 +123,34 @@
         function status(){
             const user = auth.currentUser;
 
-            get(child(ref(database), 'users/' + user.uid))
-            .then((snapshot) => {
-                if (snapshot.exists()) {
-                    alert('Hi, ' + snapshot.val().username 
-                    + '\n----------\nChess:\nWins: ' + snapshot.val().chess_wins 
-                    + '\nLosses: ' + snapshot.val().chess_losses 
-                    + '\nDraws: ' + snapshot.val().chess_draws
-                    + '\n----------\nTic Tac Toe:\nWins: ' + snapshot.val().ttt_wins 
-                    + '\nLosses: ' + snapshot.val().ttt_losses 
-                    + '\nDraws: ' + snapshot.val().ttt_draws
-                    + '\n----------\nSnake:\nHighest Score: ' + snapshot.val().highest_score 
-                    + '\nLongest Run: ' + snapshot.val().longest_run + ' seconds');
-                } 
-                else {
-                    alert("No data available");
-                }
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+            if(auth.currentUser === null){
+                alert('Please sign in before check the status.');
+            }
+            else{
+                get(child(ref(database), 'users/' + user.uid))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        alert('Hi, ' + snapshot.val().username 
+                        + '\n----------\nChess:\nWins: ' + snapshot.val().chess_wins 
+                        + '\nLosses: ' + snapshot.val().chess_losses 
+                        + '\nDraws: ' + snapshot.val().chess_draws
+                        + '\n----------\nTic Tac Toe:\nWins: ' + snapshot.val().ttt_wins 
+                        + '\nLosses: ' + snapshot.val().ttt_losses 
+                        + '\nDraws: ' + snapshot.val().ttt_draws
+                        + '\n----------\nSnake:\nHighest Score: ' + snapshot.val().highest_score 
+                        + '\nLongest Run: ' + snapshot.val().longest_run + ' seconds');
+                    } 
+                    else {
+                        alert("No data available");
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
 
-                alert(errorMessage);
-            });
+                    alert(errorMessage);
+                });
+            }
         }
 
       </script>
