@@ -1,7 +1,7 @@
 //import "pieces.js";
 let whiteCheck = false
 let blackCheck = false
-let movesMade;
+let movesMade = [];
 let whosTurn = "white"
 let whiteTime = 181;
 let blackTime = 180; 
