@@ -16,6 +16,13 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
+function chessWin(){
+  const user = auth.currentUser;
+  alert(user.uid);
+  
+}
+
+
 //import "pieces.js";
 let whiteCheck = false
 let blackCheck = false
@@ -478,12 +485,8 @@ function checkmate(startX, startY) {
           
           if(blackPossibleMoves.length === 0 && blackCheck === true) {
             alert("White Won");
-            
-            const user = auth.currentUser;
-            update(ref(database, 'users/' + user.uid),{
-              ttt_losses: 3,
-            })
-
+            chessWin();
+            //timerElement.textContent = "White Won";
             location.reload();
           }
           else {
@@ -522,6 +525,7 @@ function checkmate(startX, startY) {
       }
         if(whitePossibleMoves.length === 0 && whiteCheck === true) {
           alert("Black Won")
+          timerElement.textContent = "Black Won";
           location.reload(); 
       } 
       else {
