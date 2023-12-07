@@ -80,10 +80,6 @@
                     last_sign_in: dt,
                 })
 
-                update(ref(database, 'users/' + user.uid),{
-                    ttt_wins: 3,
-                })
-
                 alert('Sign In Successful!');
             })
             .catch((error) => {
