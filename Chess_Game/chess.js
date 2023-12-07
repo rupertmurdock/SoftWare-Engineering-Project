@@ -17,32 +17,31 @@ const database = getDatabase(app);
 const auth = getAuth();
 
 
-function chessWin(){
+async function chessWin() {
   const user = auth.currentUser;
 
-            get(child(ref(database), 'users/' + user.uid))
-            .then((snapshot) => {
-                if (snapshot.exists()) {
-                    alert('Hi, ' + snapshot.val().username 
-                    + '\n----------\nChess:\nWins: ' + snapshot.val().chess_wins 
-                    + '\nLosses: ' + snapshot.val().chess_losses 
-                    + '\nDraws: ' + snapshot.val().chess_draws
-                    + '\n----------\nTic Tac Toe:\nWins: ' + snapshot.val().ttt_wins 
-                    + '\nLosses: ' + snapshot.val().ttt_losses 
-                    + '\nDraws: ' + snapshot.val().ttt_draws
-                    + '\n----------\nSnake:\nHighest Score: ' + snapshot.val().highest_score 
-                    + '\nLongest Run: ' + snapshot.val().longest_run + ' seconds');
-                } 
-                else {
-                    alert("No data available");
-                }
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+  if (user) {
+    console.log("User UID:", user.uid);
 
-                alert(errorMessage);
-            });
+    try {
+      const snapshot = await get(child(ref(database), 'users/' + user.uid));
+      console.log("Firebase Snapshot:", snapshot.val());
+
+      if (snapshot.exists()) {
+        alert('win~~~~~');
+        // snapshot.val().chess_wins
+      } else {
+        alert("No data available");
+      }
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error("Firebase Error:", errorCode, errorMessage);
+      alert(errorMessage);
+    }
+  } else {
+    alert("No user is logged in");
+  }
 }
 
 //import "pieces.js";
