@@ -285,7 +285,7 @@ class Knight {
     let diffY = Math.abs(targetY - startY);
     const dragColor = beingDragged.classList.toString();
     if(((diffX === 2 && diffY === 1) || (diffX === 1 && diffY === 2))
-      && chessboard[targetX][targetY].color !== dragColor) {
+      && chessboard[targetX][targetY].color !== chessboard[startX][startY].color) {
       return true
     }
     else {
