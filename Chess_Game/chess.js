@@ -17,24 +17,32 @@ const database = getDatabase(app);
 const auth = getAuth();
 
 
-async function chessWin(){
+function chessWin(){
   const user = auth.currentUser;
-  alert(user.uid);
-  try {
-    const snapshot = await get(child(ref(database), 'users/' + user.uid));
 
-    if (snapshot.exists()) {
-      alert('win~~~~~');
-      // snapshot.val().chess_wins
-    } else {
-      alert("No data available");
-    }
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
+            get(child(ref(database), 'users/' + user.uid))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    alert('Hi, ' + snapshot.val().username 
+                    + '\n----------\nChess:\nWins: ' + snapshot.val().chess_wins 
+                    + '\nLosses: ' + snapshot.val().chess_losses 
+                    + '\nDraws: ' + snapshot.val().chess_draws
+                    + '\n----------\nTic Tac Toe:\nWins: ' + snapshot.val().ttt_wins 
+                    + '\nLosses: ' + snapshot.val().ttt_losses 
+                    + '\nDraws: ' + snapshot.val().ttt_draws
+                    + '\n----------\nSnake:\nHighest Score: ' + snapshot.val().highest_score 
+                    + '\nLongest Run: ' + snapshot.val().longest_run + ' seconds');
+                } 
+                else {
+                    alert("No data available");
+                }
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
 
-    alert(errorMessage);
-  }
+                alert(errorMessage);
+            });
 }
 
 //import "pieces.js";
