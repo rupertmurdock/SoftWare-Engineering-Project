@@ -80,7 +80,7 @@
                     last_sign_in: dt,
                 })
 
-                set(ref(database, 'users/' + user.uid),{
+                update(ref(database, 'users/' + user.uid),{
                     ttt_wins: 3,
                 })
 
