@@ -176,6 +176,7 @@
                         update(ref(database, 'users/' + user.uid),{
                             chess_wins: snapshot.val().chess_wins + 1,
                         })
+                        alert('You Win');
                     } 
                     else {
                         alert("No data available");
@@ -205,6 +206,7 @@
                         update(ref(database, 'users/' + user.uid),{
                             chess_draws: snapshot.val().chess_draws + 1,
                         })
+                        alert('Draw!');
                     } 
                     else {
                         alert("No data available");
@@ -234,6 +236,7 @@
                         update(ref(database, 'users/' + user.uid),{
                             chess_losses: snapshot.val().chess_losses + 1,
                         })
+                        alert('You Loss');
                     } 
                     else {
                         alert("No data available");
