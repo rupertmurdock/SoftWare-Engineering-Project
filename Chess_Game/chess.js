@@ -18,11 +18,11 @@ const auth = getAuth();
 
 function chessWin(){
   const user = auth.currentUser;
-  var temp;
+
   get(child(ref(database), 'users/' + user.uid))
   .then((snapshot) => {
       if (snapshot.exists()) {
-        temp = snapshot.val().chess_wins + 1;
+        var temp = snapshot.val().chess_wins + 1;
         alert(temp);
         update(ref(database, 'users/' + user.uid),{
           chess_wins: temp,
@@ -501,7 +501,6 @@ function checkmate(startX, startY) {
           }
           
           if(blackPossibleMoves.length === 0 && blackCheck === true) {
-            console.log("hello i put this here");
             alert("White Won");
             chessWin();
             location.reload();
