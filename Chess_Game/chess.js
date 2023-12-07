@@ -35,9 +35,7 @@ function chessWin(){
       alert(errorMessage);
   });
 
-  update(ref(database, 'users/' + user.uid),{
-      chess_wins: temp,
-  })
+  
   alert(temp);
 }
 
