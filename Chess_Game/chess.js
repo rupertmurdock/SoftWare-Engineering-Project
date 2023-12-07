@@ -15,27 +15,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
-const user = auth.currentUser;
 
-function chessWin(){
-  
+
+async function chessWin(){
+  const user = auth.currentUser;
   alert(user.uid);
-  get(child(ref(database), 'users/' + user.uid))
-  .then((snapshot) => {
-      if (snapshot.exists()) {
-        alert('win~~~~~');
-        //snapshot.val().chess_wins
-      } 
-      else {
-        alert("No data available");
-      }
-  })
-  .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      
-      alert(errorMessage);
-  });
+  try {
+    const snapshot = await get(child(ref(database), 'users/' + user.uid));
+
+    if (snapshot.exists()) {
+      alert('win~~~~~');
+      // snapshot.val().chess_wins
+    } else {
+      alert("No data available");
+    }
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+
+    alert(errorMessage);
+  }
 }
 
 //import "pieces.js";
