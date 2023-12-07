@@ -152,7 +152,7 @@ class Pawn {
               }
               // black pawn that has moved takes a piece
               else if ((startX + 1 === targetX && Math.abs(startY - targetY) === 1) 
-              && chessboard[targetX][targetY].color !== dragColor 
+              && chessboard[targetX][targetY].color !==  chessboard[startX][startY].color
               && chessboard[targetX][targetY] !== ePiece) {
                 return true
             }
@@ -240,13 +240,15 @@ class Rook {
   movement(startX, startY, targetX, targetY) {
     let diffX = Math.abs(targetX - startX);
     let diffY = Math.abs(targetY - startY);
-    
+    movesMade = [[startX, startY]]
+
     if(diffX && !diffY) {
 
       let stepX = targetX > startX ? 1 : -1;
       
       for (let i = 1; i < diffX; i++) {
         if (chessboard[startX + i * stepX][startY] !== ePiece) {
+          movesMade = []
           return false;
         }
       }
@@ -257,6 +259,7 @@ class Rook {
       for (let i = 1; i < diffY; i++) {
         
         if (chessboard[startX][startY + i * stepY] !== ePiece) {
+          movesMade = [];
           return false;
         }
       }
@@ -276,6 +279,7 @@ class Knight {
           this.color = color;
   }
   movement(startX, startY, targetX, targetY) {
+    movesMade = [[startX, startY]]
 
     let diffX = Math.abs(targetX - startX);
     let diffY = Math.abs(targetY - startY);
@@ -298,6 +302,8 @@ class King {
           this.color = color;
   }
   movement(startX, startY, targetX, targetY) {
+    movesMade = [[startX, startY]]
+
     let diffX = Math.abs(targetX - startX);
     let diffY = Math.abs(targetY - startY);
     const colorMatch = chessboard[startX][startY].color === chessboard[targetX][targetY].color;
