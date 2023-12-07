@@ -18,7 +18,7 @@ const auth = getAuth();
 
 function chessWin(){
   const user = auth.currentUser;
-
+  alert(user.uid);
   get(child(ref(database), 'users/' + user.uid))
   .then((snapshot) => {
       if (snapshot.exists()) {
